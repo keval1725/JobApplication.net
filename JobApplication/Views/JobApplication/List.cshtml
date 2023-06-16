@@ -1,0 +1,127 @@
+﻿@model JobApplication.Data.Models.ListModel
+
+
+<p class="card-header fw-bolder">All Candidate Basic Details</p>
+
+
+<div class="mt-2 mb-2">
+  
+
+        <input type="text" class="form-control" id="Searching" oninput="ShowData()" name="serch" value="@ViewData["Search"]" placeholder="Search" />
+       
+        @if (ViewData["Search"] != null || ViewData["Search"] != "")
+        {
+        <a asp-action="List" asp-route-columnOrder="Basic_id"  class="btn btn-secondary mt-2">Cancel</a>
+        }
+
+</div>
+<div id="List_data">
+<table class="table-active table">
+    <thead>
+        <tr>
+            <th>
+               Sr.No
+                
+            </th>
+            <th>
+                    <a asp-controller="JobApplication" asp-action="List" class="text-decoration-none" asp-route-columnOrder="@ViewData["FirstNameSortParam"]" asp-route-searchFor="@ViewData["Search"]">
+                @Html.DisplayNameFor(item => item.BasicDetailes[0].FIRST_NAME)
+              </a>
+            </th>
+            <th>
+                    <a asp-controller="JobApplication" asp-action="List" class="text-decoration-none" asp-route-columnOrder="@ViewData["LastNameSortParam"]" asp-route-searchFor="@ViewData["Search"]">
+                    @Html.DisplayNameFor(item => item.BasicDetailes[0].LAST_NAME)
+                </a>
+            </th>
+           
+            <th class="text-decoration-none">
+                    <a asp-controller="JobApplication" asp-action="List" class="text-decoration-none" asp-route-columnOrder="@ViewData["EmailSortParam"]" asp-route-searchFor="@ViewData["Search"]">
+                    @Html.DisplayNameFor(item => item.BasicDetailes[0].Email )
+                </a>
+            </th>
+            <th>
+                    <a asp-controller="JobApplication" class="text-decoration-none" asp-action="List" asp-route-columnOrder="@ViewData["GenderNameSortParam"]" asp-route-searchFor="@ViewData["Search"]">
+                    @Html.DisplayNameFor(item => item.BasicDetailes[0].Gender)
+                </a>
+            </th>
+            <th>
+                    <a asp-controller="JobApplication" asp-action="List" class="text-decoration-none" asp-route-columnOrder="@ViewData["CitytNameSortParam"]" asp-route-searchFor="@ViewData["Search"]">
+                    @Html.DisplayNameFor(item => item.BasicDetailes[0].City)
+                </a>
+            </th>
+            
+            <th>
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            int count = 1;
+
+            @foreach (var details in Model.BasicDetailes)
+
+            {
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td>
+                        @details.FIRST_NAME
+                    </td>
+                    <td>
+                        @details.LAST_NAME
+                    </td>
+                    <td>
+                        @details.Email
+                    </td>
+                    <td>
+                        @details.Gender
+                    </td>
+                    <td>
+                        @details.City
+                    </td>
+                        <td>
+                            <select class="form-control dropdown ActionDropDown  ">
+
+                                <option disabled="disabled" selected>Action</option>
+                                <option value="Update/@details.Basic_id">
+                                    <a asp-action="Update" asp-route-id="@details.Basic_id">Update</a>
+                                </option>
+                                <option value="Delete/@details.Basic_id">
+                                    <a asp-action="Delete" asp-route-id="@details.Basic_id">Delete</a>
+                                </option>
+
+                            </select>
+
+
+                        </td>
+                </tr>
+                count++;
+            }
+
+        }
+
+    </tbody>
+</table>
+
+<p>Showing @ViewData["offset"] of @ViewData["TotalListData"] Total @ViewData["TotalRows"]</p>
+                    @for (int i = 1; i <= Model.pagecount; i++){
+        if( ViewBag.data == i)
+        {
+            <a  asp-asp-controller="JobApplication" asp-action="List" asp-route-page="@i" asp-route-columnOrder="@ViewData["CurrentSortOrder"]" asp-route-searchFor="@ViewData["Search"]" class="text-text-decoration-none bg-danger  m-1 p-1 m-1 p-1">@i</a>
+        }
+        else
+        {
+            <a  asp-asp-controller="JobApplication" asp-action="List" asp-route-page="@i" asp-route-columnOrder="@ViewData["CurrentSortOrder"]" asp-route-searchFor="@ViewData["Search"]" class="text-text-decoration-none  m-1 p-1">@i</a>
+
+        }
+
+
+                    }   
+
+</div>
+<script src="~/js/ListData.js"></script>
+                 

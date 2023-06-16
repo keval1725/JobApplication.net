@@ -1,0 +1,21 @@
+﻿@model JobApplication.Data.Models.Domain.Registration
+
+<h1>Login</h1>
+
+<form asp-action="Login" method="post">
+   
+    
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input type="email" class="form-control" asp-for="Email" placeholder="Enter email">
+
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+    </div>
+   
+
+    <input type="submit" class="btn btn-primary" value="Submit" />
+
+</form>

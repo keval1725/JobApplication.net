@@ -1,0 +1,463 @@
+﻿@model JobApplication.Data.Models.UpdateModel;
+
+<body>
+    <div>
+        <h1 >Job Application Form</h1>
+
+        <form  asp-action="Update" method="post" onsubmit="SubmitConfirmation()">
+            <fieldset class="form-group">
+                <legend><b>Basic Details</b></legend>
+                <table class="table">
+                    <tr>
+                        <input type="text"  asp-for="@Model.BasicDetailes.Basic_id" hidden/>
+                        <td>First Name:</td>
+                        
+                        <td><input type="text" class="form-control" asp-for="@Model.BasicDetailes.FIRST_NAME"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.FIRST_NAME" class="text-danger"></span></td>
+                        <td>Last Name:</td>
+                        <td><input asp-for="@Model.BasicDetailes.LAST_NAME" class="form-control" type="text"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.LAST_NAME" class="text-danger"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Designation :</td>
+                        <td><input class="form-control" asp-for="@Model.BasicDetailes.DESIGNATION" type="text"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.DESIGNATION" class="text-danger"></span></td>
+                        <td>Zipcode :</td>
+                        <td><input class="form-control" type="text" asp-for="@Model.BasicDetailes.ZipCode"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.ZipCode" class="text-danger"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Address 1 :</td>
+                        <td><input class="form-control" asp-for="@Model.BasicDetailes.ADDRESS1" type="text"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.ADDRESS1" class="text-danger"></span></td>
+                        <td> Address 2 :</td>
+                        <td> <input class="form-control" asp-for="@Model.BasicDetailes.ADDRESS2" type="text"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.ADDRESS2" class="text-danger"></span></td>
+
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input class="form-control" type="email" asp-for="@Model.BasicDetailes.Email"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.Email" class="text-danger"></span></td>
+                        <td>Phone</td>
+                        <td><input class="form-control" type="text" asp-for="@Model.BasicDetailes.PhoneNumber"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.PhoneNumber" class="text-danger"></span></td>
+                    </tr>
+                    <tr>
+
+
+                        @foreach (var gender in Model.Gender)
+                        {
+                            <td><input type="radio" asp-for="@Model.BasicDetailes.Gender" value="@gender.OptionMasterFieldName">@gender.OptionMasterFieldName</td>
+                        }
+
+                        <td><span asp-validation-for="@Model.BasicDetailes.Gender" class="text-danger"></span></td>
+
+                    </tr>
+                    <tr>
+                        <td>City :</td>
+                        <td><input class="form-control" type="text" asp-for="@Model.BasicDetailes.City"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.City" class="text-danger"></span></td>
+                        <td>State :</td>
+                        <td><input class="form-control" type="text" asp-for="@Model.BasicDetailes.State"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.State" class="text-danger"></span></td>
+
+                    </tr>
+                    <tr>
+                        <td>Relationship Status:</td>
+                        <td>
+                            <select class="arrDropDown  form-control" asp-for="@Model.BasicDetailes.RELATIONSHIP_STATUS">
+                                @foreach (var rd in Model.RelationStatus)
+                                {
+                                    <option asp-for="@rd.OptionMasterFieldName">@rd.OptionMasterFieldName</option>
+                                }
+                            </select>
+                        </td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.RELATIONSHIP_STATUS" class="text-danger"></span></td>
+                        <td>Date Of Birth:</td> 
+                        <td><input type="date"  asp-for="@Model.BasicDetailes.DOB" value="@Model.BasicDetailes.DOB.ToString("yyyy-MM-dd")"></td>
+                        <td><span asp-validation-for="@Model.BasicDetailes.DOB" class="text-danger" ></span></td>
+                        <input type="number"  asp-for="@Model.BasicDetailes.UserId" hidden>
+
+                    </tr>
+                </table>
+
+
+            </fieldset>
+
+            <div class="div2">
+                <fieldset>
+                    <legend><b>Education Details</b> </legend>
+
+
+                    <table  class="table">
+                        <tbody id ="parent_edu">
+                        @{
+                            var Ed = 0;
+                        @foreach (var Education in Model.BasicDetailes.Educations)
+                        {
+                                <tr id="child_edu" class="edus">
+                                <td>
+                                    <input type="text"  asp-for="@Model.BasicDetailes.Educations[Ed].EducationId" hidden />
+                                            <select class="arrDropDown form-control" id="edu_Course" asp-for="@Model.BasicDetailes.Educations[Ed].Course">
+                                        @foreach (var Educations in Model.EducationDetailes)
+                                        {
+                                            <option asp-for="@Educations.OptionMasterFieldName">@Educations.OptionMasterFieldName</option>
+                                        }
+                                    </select>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.Educations[0].Course" class="text-danger"></span></td>
+
+                                </td>
+                                <td>Name Of Board :</td>
+                                        <td><input id="edu_Institute" class="form-control" type="text" asp-for="@Model.BasicDetailes.Educations[Ed].Board"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.Educations[0].Board" class="text-danger"></span></td>
+                                <td>Passing Year :</td>
+                                        <td><input id="edu_PassYear" class="form-control" type="text" asp-for="@Model.BasicDetailes.Educations[Ed].PassYear"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.Educations[0].PassYear" class="text-danger"></span></td>
+                                <td>Percentage :</td>
+                                        <td><input id="edu_Grade" class="form-control" type="text" asp-for="@Model.BasicDetailes.Educations[Ed].Percentage"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.Educations[0].Percentage" class="text-danger"></span></td>
+                                </tr>
+                                Ed++;
+                            }
+                        }
+                        </tbody>
+                    </table>
+
+                    <input id="edu" type="button" class="btn btn-dark" value="Add Education" />
+
+
+
+
+                </fieldset>
+            </div>
+
+            <div class="div3">
+                <fieldset>
+                    <legend><b>Work Experience</b></legend>
+                    <table class="table" >
+                        <tbody id="parent_work">
+                        @{
+                            var Work = 0;
+                        @foreach (var item in Model.BasicDetailes.WorkExperinces)
+                        {
+                            <tr id="child_work">
+                                <td>Company Name</td>
+                                <input type="text" class="Works" asp-for="@Model.BasicDetailes.WorkExperinces[Work].Work_Id" hidden />
+
+                                        <td><input type="text" id="work_Company" class="form-control" asp-for="@Model.BasicDetailes.WorkExperinces[Work].Company_name"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.WorkExperinces[Work].Company_name" class="text-danger"></span></td>
+                                <td>Designation/Role/Position</td>
+                                        <td><input id="work_Role" class="form-control" asp-for="@Model.BasicDetailes.WorkExperinces[Work].DESIGNATION" type="text"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.WorkExperinces[Work].DESIGNATION" class="text-danger"></span></td>
+                                <td>From</td>
+                                    <td><input id="work_From"  asp-for="@Model.BasicDetailes.WorkExperinces[Work].From" type="date" value="@Model.BasicDetailes.WorkExperinces[Work].From.ToString("yyyy-MM-dd")"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.WorkExperinces[Work].From" class="text-danger"></span></td>
+                                <td>To</td>
+                                    <td><input id="work_To" asp-for="@Model.BasicDetailes.WorkExperinces[Work].To" value="@Model.BasicDetailes.WorkExperinces[Work].To.ToString("yyyy-MM-dd")" type="date"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.WorkExperinces[Work].To" class="text-danger"></span></td>
+
+                                </tr>
+                                Work++;
+                            }
+                        }
+                        </tbody>
+                    </table>
+                    <input id="exp" type="button" class="btn btn-dark" value="Add Experince" />
+                </fieldset>
+            </div>
+
+            <div class="div4">
+                <fieldset>
+                    <legend><b>Language Ability</b></legend>
+
+                    <table id="parent_lang" class="table">
+
+                        @{
+                            var counter = 0;
+                            @foreach (var Edu in Model.AllLangauges)
+                            {
+
+                                int flag = 0;
+                                @foreach (var langauge in Model.BasicDetailes.Langauges)
+                                {
+                                    
+
+                                        @if (langauge.langauge == Edu.OptionMasterFieldName)
+                                            {
+                                        flag = 1;
+                                        <tr id="child_lang">
+                                          
+                                                <td>
+                                                <input type="checkbox" class="LanguageName" name="@Edu.OptionMasterFieldName" value="@Edu.OptionMasterFieldName" checked />
+                                                <input type="text" asp-for="@Model.BasicDetailes.Langauges[counter].Langauge_Id" class="form-control" hidden />
+                                                    @Edu.OptionMasterFieldName
+                                                </td>
+                                                @if (langauge.Read == "Yes")
+                                                {
+                                                    <td><input id="Read_@Edu.OptionMasterFieldName" type="checkbox" value="Yes" checked></td>
+                                                    <td>Read</td>
+                                                }else{
+                                                <td><input id="Read_@Edu.OptionMasterFieldName" type="checkbox" value="Yes" ></td>
+                                                <td>Read</td>
+                                                }
+                                            @if (langauge.Write == "Yes")
+                                            {
+                                                <td><input id="Write_@Edu.OptionMasterFieldName" type="checkbox" value="Yes" checked></td>
+                                                <td>Write</td>
+                                            }
+                                            else
+                                            {
+                                                <td><input id="Write_@Edu.OptionMasterFieldName" type="checkbox" value="Yes"></td>
+                                                <td>Write</td>
+                                                
+                                            }
+                                            @if (langauge.Speak == "Yes")
+                                            {
+                                                <td>
+                                                    <input id="Speak_@Edu.OptionMasterFieldName" type="checkbox" value="Yes" checked>
+                                                </td>
+                                                <td>Speak</td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <input id="Speak_@Edu.OptionMasterFieldName" type="checkbox" value="Yes">
+                                                </td>
+                                                <td>Speak</td>
+                                            }
+                                        </tr>
+
+                                        counter++;
+                                        }
+                                    }
+
+                                        @if(flag == 0)
+                                        {
+                                            <tr id="child_lang">
+                                                <td>
+                                            <input type="checkbox" class="LanguageName" name="@Edu.OptionMasterFieldName" value="@Edu.OptionMasterFieldName" />
+
+                                                    @Edu.OptionMasterFieldName
+                                                </td>
+                                                <td><input id="Read_@Edu.OptionMasterFieldName" type="checkbox" value="Yes"></td>
+                                                <td>Read</td>
+                                          
+                                            <td><input id="Write_@Edu.OptionMasterFieldName" type="checkbox" value="Yes"></td>
+                                            <td>Write</td>
+                                            <td>
+                                                <input id="Speak_@Edu.OptionMasterFieldName" type="checkbox" value="Yes">
+                                            </td>
+                                            <td>Speak</td>
+                                        </tr>
+                                        }
+   
+                            }
+                           
+                        }
+                    </table>
+
+
+                </fieldset>
+            </div>
+            <div class="div5">
+                <fieldset>
+                    <legend> <b>Technologies You Known</b></legend>
+                    <table id="parent_tech">
+                        @{
+                            var count = 0;
+
+                            int nameCount = 0;
+
+                            @foreach (var Tech in Model.TechnologyNames)
+                            {
+                               int flags = 0;
+                                @foreach (var selectTech in Model.BasicDetailes.Technologiess)
+                                {
+                                    @if(selectTech.TechnologyName == Tech.OptionMasterFieldName){
+                                        flags = 1;
+                                        <tr id="child_tech">
+                                            <input type="text" asp-for="@Model.BasicDetailes.Technologiess[count].Id" class="form-control" hidden />
+                                            <td>
+                                                <input type="checkbox" class="TechnologyName" value="@Tech.OptionMasterFieldName" checked />   @Tech.OptionMasterFieldName
+                                            </td>
+
+                                            @if (selectTech.TechLevel == "Beginer")
+                                            {
+
+                                            <td>
+                                                <input type="radio" value="Beginer" name="BasicDetailes.Technologiess[@count].TechLevel" id="Beigner(@Tech.OptionMasterFieldName)" checked>
+
+                                            </td>
+                                                <td>beginer</td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <input type="radio" value="Beginer" name="BasicDetailes.Technologiess[@count].TechLevel" id="Beigner(@Tech.OptionMasterFieldName)">
+
+                                                </td>
+                                                <td>Beginer</td>
+                                            }
+                                            @if (selectTech.TechLevel == "Mediator")
+                                            {
+                                            <td><input type="radio" value="Mediator" name="BasicDetailes.Technologiess[@count].TechLevel" id="Mediatr(@Tech.OptionMasterFieldName)" checked></td>
+                                                <td>Mideator</td>
+                                            }
+                                            else
+                                            {
+                                                <td><input type="radio" value="Mediator" name="BasicDetailes.Technologiess[@count].TechLevel" id="Mediatr(@Tech.OptionMasterFieldName)"></td>
+                                                <td>Mideator</td>
+                                            }
+                                            @if (selectTech.TechLevel == "Expert")
+                                            {
+                                                <td><input type="radio" value="Expert" name="BasicDetailes.Technologiess[@count].TechLevel" id="Expert(@Tech.OptionMasterFieldName)" checked></td>
+                                                <td>Expert</td>
+                                            }
+                                            else
+                                            {
+                                                <td><input type="radio" value="Expert" name="BasicDetailes.Technologiess[@count].TechLevel" id="Expert(@Tech.OptionMasterFieldName)"></td>
+                                                <td>Expert</td>
+                                            }
+                                        </tr>
+                                count++;
+                                    }
+                                }
+                                if(flags == 0)
+                                {
+                                    <tr id="child_tech">
+                                        <td>
+                                            <input type="checkbox" class="TechnologyName" value="@Tech.OptionMasterFieldName" />   @Tech.OptionMasterFieldName
+                                        </td>
+
+
+                                        <td>
+                                            <input type="radio" value="Beginer" name="BasicDetailes.Technologiess[@count].TechLevel" id="Beigner(@Tech.OptionMasterFieldName)">
+
+                                        </td>
+                                        <td>Beginer</td>
+                                        <td><input type="radio" value="Mediator" name="BasicDetailes.Technologiess[@count].TechLevel" id="Mediatr(@Tech.OptionMasterFieldName)"></td>
+                                        <td>Mideator</td>
+                                        <td><input type="radio" value="Expert" name="BasicDetailes.Technologiess[@count].TechLevel" id="Expert(@Tech.OptionMasterFieldName)"></td>
+                                        <td>Expert</td>
+                                    </tr>
+                                }
+
+                            }
+
+                        }
+
+                    </table>
+
+
+                </fieldset>
+            </div>
+            <div class="div6">
+                <fieldset>
+                    <legend><b>Reference Contact</b> </legend>
+                    <table  class="table">
+                        <tbody id="parent_ref">
+                        @{
+                            var refr = 0;
+                        @foreach (var refrence in Model.BasicDetailes.Refrences)
+                        {
+                            <tr id="child_ref">
+                                    <input type="text" class="" asp-for="@Model.BasicDetailes.Refrences[refr].RefrenceId" class="form-control" hidden />
+
+                                <td>Name</td>
+                                    <td><input id="refrence_ReferencePersonName" class="refrence1 form-control" asp-for="@Model.BasicDetailes.Refrences[refr].ReferencePersonName" type="text"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.Refrences[refr].ReferencePersonName" class="text-danger"></span></td>
+                                <td>Contact</td>
+                                    <td><input id="refrence_ReferencePersonContact" asp-for="@Model.BasicDetailes.Refrences[refr].ReferencePersonContact" class="form-control" type="text"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.Refrences[refr].ReferencePersonContact" class="text-danger"></span></td>
+                                <td>Relation</td>
+                                    <td><input id="refrence_RefrencePersonRelation" asp-for="@Model.BasicDetailes.Refrences[refr].RefrencePersonRelation" class="form-control" type="text"></td>
+                                    <td><span asp-validation-for="@Model.BasicDetailes.Refrences[refr].RefrencePersonRelation" class="text-danger"></span></td>
+
+                                </tr>
+                                refr++;
+                            }
+                        }
+                        </tbody>
+                    </table>
+                    <input id="reference" class="btn btn-dark" type="button" value="Add Reference" />
+
+                </fieldset>
+            </div>
+
+
+            <div class="div7">
+                <fieldset>
+                    <legend> <b>Preferences</b> </legend>
+                    <table>
+
+                        <tr>
+                            <td>Preferd Location: </td>
+                            <td>
+                                <input type="text" asp-for="@Model.BasicDetailes.Prefrencess[0].Id" class="form-control" hidden />
+
+                                <select class="arrDropDown form-control" asp-for="@Model.BasicDetailes.Prefrencess[0].PreferedLocation">
+                                    @foreach (var Prefrence in Model.PreferdLocations)
+                                    {
+                                        <option asp-for="@Prefrence.OptionMasterFieldName">@Prefrence.OptionMasterFieldName</option>
+                                    }
+
+
+                                </select>
+                            <td><span asp-validation-for="@Model.BasicDetailes.Prefrencess[0].PreferedLocation" class="text-danger"></span></td>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Notice Period</td>
+                                        <td><input type="text" class="form-control" asp-for="@Model.BasicDetailes.Prefrencess[0].NoticePeriod"></td>
+                                        <td><span asp-validation-for="@Model.BasicDetailes.Prefrencess[0].NoticePeriod" class="text-danger"></span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Expacted CTC</td>
+                                        <td><input type="text" class="form-control" asp-for="@Model.BasicDetailes.Prefrencess[0].ExpectedCTC"></td>
+                                        <td><span asp-validation-for="@Model.BasicDetailes.Prefrencess[0].ExpectedCTC" class="text-danger"></span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Current CTC</td>
+                                        <td><input type="text" class="form-control" asp-for="@Model.BasicDetailes.Prefrencess[0].CurrentCTC"></td>
+                                        <td><span asp-validation-for="@Model.BasicDetailes.Prefrencess[0].CurrentCTC" class="text-danger"></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>D   epartment:</td>
+                            <td>
+                                <select class="arrDropDown form-control" asp-for="@Model.BasicDetailes.Prefrencess[0].Department">
+                                    @foreach (var Prefrence in Model.Departments)
+                                    {
+                                        <option asp-for="@Prefrence.OptionMasterFieldName">@Prefrence.OptionMasterFieldName</option>
+                                    }
+
+                                </select>
+                            </td>
+                            <td><span asp-validation-for="@Model.BasicDetailes.Prefrencess[0].Department" class="text-danger"></span></td>
+                        </tr>
+
+              
+
+                    </table>
+                </fieldset>
+            </div>
+
+            <input type="submit" class="btn btn-dark" />
+
+        </form>
+    </div>
+
+
+    <script src="~/js/Update.js">
+
+    </script>
+</body>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+   }

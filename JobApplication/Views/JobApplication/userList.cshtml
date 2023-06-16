@@ -1,0 +1,98 @@
+﻿@model JobApplication.Models.Domain.BasicDetailes
+
+
+
+<h1>User's' List</h1>
+
+<div id="dataRender">
+
+
+    <table class="table-active table">
+        <thead>
+            <tr>
+                <th>Sr No.</th>
+                <th>
+                   
+
+                        @Html.DisplayNameFor(item =>item.FIRST_NAME)
+                    
+                </th>
+                <th>
+                   
+                        @Html.DisplayNameFor(item =>item.LAST_NAME)
+                    
+                </th>
+                <th class="text-decoration-none">
+                   
+                        @Html.DisplayNameFor(item => item.Email )
+                    
+                </th>
+                <th>
+                  
+                        @Html.DisplayNameFor(item =>item.Gender)
+                    
+                </th>
+                <th>
+                   
+                        @Html.DisplayNameFor(item => item.City)
+                   
+                </th>
+                <th>
+                  
+                        @Html.DisplayNameFor(item => item.PhoneNumber)
+                    
+                </th>
+                <th>
+                    Action
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+                    <tr>
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            @Model.FIRST_NAME
+                        </td>
+                        <td>
+                            @Model.LAST_NAME
+                        </td>
+                        <td>
+                            @Model.Email
+                        </td>
+                        <td>
+                            @Model.Gender
+                        </td>
+                        <td>
+                            @Model.City
+                        </td>
+                        <td>
+                           @Model.PhoneNumber
+                        </td>
+                        <td>
+                            <select class="form-control dropdown ActionDropDown">
+
+                                <option disabled="disabled" selected>Action</option>
+                                <option value="Update/@Model.Basic_id">
+                            <a asp-action="Update" asp-route-id="@Model.Basic_id">Update</a>
+                                </option>
+                        <option value="Delete/@Model.Basic_id">
+                            <a asp-action="Delete" asp-route-id="@Model.Basic_id">Delete</a>
+                                </option>
+
+                            </select>
+
+
+                        </td>
+
+                    </tr>
+
+                   
+
+        </tbody>
+    </table>
+<script src="~/js/ListData.js"></script>
